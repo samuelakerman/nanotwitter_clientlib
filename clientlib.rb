@@ -11,15 +11,15 @@ def http_request(request_type, url, token, params)
 	http = Net::HTTP.new(uri.host, uri.port)
 
 	if request_type=="Post"
-		request = Net::HTTP::Post.new(uri.path)
+		request = Net::HTTP::Post.new(uri.request_uri)
 	elsif request_type=="Get"
-		request = Net::HTTP::Get.new(uri.path)
+		request = Net::HTTP::Get.new(uri.request_uri)
 	elsif request_type=="Put"
-		request = Net::HTTP::Put.new(uri.path)
+		request = Net::HTTP::Put.new(uri.request_uri)
 	elsif request_type=="Patch"
-		request = Net::HTTP::Patch.new(uri.path)
+		request = Net::HTTP::Patch.new(uri.request_uri)
 	elsif request_type=="Delete"
-		request = Net::HTTP::Delete.new(uri.path)
+		request = Net::HTTP::Delete.new(uri.request_uri)
 	end
 
 	if token!=nil then
@@ -110,12 +110,12 @@ class NanoTwitter
 		end
 	end
 
-	def my_timeline
+	def my_timeline no_of_tweets
 		if self.token == nil then
 			puts "Please, login first in order to see your timeline"
 			return 0
 		else
-			response = http_request "Get", self.host+"/api/v1/homeline", self.token, nil
+			response = http_request "Get", self.host+"/api/v1/homeline?id_max=0&number="+no_of_tweets.to_s, self.token, nil
 			if response.code == "200" then
 				response_message = JSON.parse response.body
 				timeline = response_message["resultMsg"]["home_line"]
