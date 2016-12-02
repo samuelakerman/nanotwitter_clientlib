@@ -16,7 +16,7 @@ client.my_followers
 client.my_followings
 
 #Fetch my timeline
-client.my_timeline
+client.my_timeline 50
 
 #Post tweet
 client.post_tweet "This is a test tweet for NanoTwitter" 
