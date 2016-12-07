@@ -6,7 +6,6 @@ require 'cgi'
 
 
 def http_request(request_type, url, token, params)
-
 	uri = URI.parse(url)
 	http = Net::HTTP.new(uri.host, uri.port)
 
@@ -27,7 +26,6 @@ def http_request(request_type, url, token, params)
 		request['Cookie'] = cookie.to_s
 	end
 
-
 	if params!=nil
 		response = http.request(request, params)
 	else
@@ -36,11 +34,11 @@ def http_request(request_type, url, token, params)
 	return response
 end
 
-
 class NanoTwitter
 	attr_accessor :token, :host, :user_id
  	def init host
  		self.host = host
+ 		return 1
  	end
 	def login(username,password)
 
@@ -133,6 +131,20 @@ class NanoTwitter
 		else
 			params  = {'content' => content, 'reply_to_tweet_id' => nil}.to_json
 			response = http_request "Post", self.host+"/api/v1/tweets", self.token, params
+			if response.code == "200"
+				return 1
+			else return 0
+			end
+		end
+	end
+
+	def follow_user following_id 
+		if self.token == nil then
+			puts "Please, login first in order to follow another user"
+			return 0
+		else
+			params  = {'following_id' => following_id}.to_json
+			response = http_request "Post", self.host+'/api/v1/follows', self.token, params
 			if response.code == "200"
 				return 1
 			else return 0
