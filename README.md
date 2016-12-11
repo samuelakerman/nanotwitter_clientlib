@@ -9,5 +9,6 @@ Methods defined:
 - my_followings
 - my_timeline
 - post_tweet
+-follow_user
 
 Samuel Akerman, Hongi Chen
