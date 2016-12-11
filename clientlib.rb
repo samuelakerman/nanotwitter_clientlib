@@ -94,7 +94,7 @@ class NanoTwitter
 
 	def my_followings
 		if self.token == nil then
-			puts "Please, login first in order to see your followers"
+			puts "Please, login first in order to see the users you are following"
 			return 0
 		else
 			response = http_request "Get", self.host+"/api/v1/users/"+self.user_id.to_s+"/followings", self.token, nil
